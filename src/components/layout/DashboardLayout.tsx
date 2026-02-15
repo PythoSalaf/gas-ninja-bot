@@ -20,7 +20,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <Fuel className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h1 className="text-sm font-bold tracking-tight">Gas Intelligence Agent</h1>
+              <h1 className="text-sm font-bold tracking-tight">Gas Ninja Bot</h1>
               <p className="text-[10px] uppercase tracking-widest text-muted-foreground">BNB Chain • Autonomous</p>
             </div>
           </div>
