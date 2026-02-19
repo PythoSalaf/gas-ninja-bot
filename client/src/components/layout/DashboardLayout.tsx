@@ -1,5 +1,14 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Activity, BarChart3, Clock, Send, Fuel, Zap } from "lucide-react";
+import {
+  Activity,
+  BarChart3,
+  Clock,
+  Send,
+  Fuel,
+  Zap,
+  Wallet,
+} from "lucide-react";
+import { usePrivy, useWallets } from "@privy-io/react-auth";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -9,7 +18,11 @@ const navItems = [
 ];
 
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const { login, user, logout, authenticated } = usePrivy();
+  const { wallets } = useWallets();
   const location = useLocation();
+
+  console.log("Wallet Info", user?.wallet);
 
   return (
     <div className="dark min-h-screen bg-background text-foreground">
@@ -20,8 +33,12 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <Fuel className="h-5 w-5 text-primary" />
             </div>
             <div>
-              <h1 className="text-sm font-bold tracking-tight">Gas Ninja Bot</h1>
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">BNB Chain • Autonomous</p>
+              <h1 className="text-sm font-bold tracking-tight">
+                Gas Ninja Bot
+              </h1>
+              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">
+                BNB Chain • Autonomous
+              </p>
             </div>
           </div>
 
@@ -34,7 +51,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   location.pathname === to
                     ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                    : "text-muted-foreground hover:bg-secondary hover:text-foreground",
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -46,8 +63,25 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-3 py-1.5">
               <div className="h-2 w-2 animate-pulse-glow rounded-full bg-primary" />
-              <span className="text-xs font-medium text-muted-foreground">Agent Active</span>
+              <span className="text-xs font-medium text-muted-foreground">
+                Agent Active
+              </span>
             </div>
+            {!authenticated ? (
+              <div
+                className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-3 py-1 text-xs font-medium text-muted-foreground cursor-pointer"
+                onClick={login}
+              >
+                Sign in
+              </div>
+            ) : (
+              <div
+                className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-3 py-1 text-xs font-medium text-muted-foreground cursor-pointer"
+                onClick={logout}
+              >
+                Logout
+              </div>
+            )}
           </div>
         </div>
       </header>
